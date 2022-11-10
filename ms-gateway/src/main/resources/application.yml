@@ -1,0 +1,50 @@
+redis:
+  host: localhost
+  password:
+  port: 6379
+  dbIndex: 0
+  maxIdle: 50
+  minIdle: 50
+  maxTotal: 50
+  timeout: 5
+  maxWait: 10
+  shutdown: 100
+server:
+  port: 80
+  error:
+    include-message: always
+    whitelabel:
+      enabled: false
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  application:
+    name: ms-gateway service
+  profiles:
+    active: dev
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+config:
+  cors:
+    maxAge: 18000
+  internal:
+    api:
+      key: ce250ed5-9329-4ca2-bef8-6e50e6b27209
+gateway:
+  routes:
+    - id: ms-audit
+      path: "/api/audit-service/**"
+      url: "http://localhost:81/api/audit-service"
+      apiKey: 4da85148-6e25-4a2e-9744-382adf1c3e9c
+    - id: ms-task
+      path: "/api/task-service/**"
+      url: "http://localhost:82/api/task-service"
+      apiKey: 45e21844-2546-45bd-b4dc-52765949ffd9
+client:
+  endpoints:
+    - http://localhost:4200
+    - http://localhost
