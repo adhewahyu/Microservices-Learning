@@ -22,9 +22,5 @@ public class CommonConstants {
     public static final String ERR_MSG_EXPECTATION_FAILED = "Expectation failed";
     public static final String ERR_MSG_DATA_NOT_FOUND = "Data not found";
     public static final String ERR_MSG_SOMETHING_WRONG = "Something went wrong";
-    public static final String ERR_MSG_MODULE_REQUIRED = "Module is required";
-    public static final String ERR_MSG_ACTIVITY_REQUIRED = "Activity is required";
-    public static final String ERR_MSG_CREATED_DATE_REQUIRED = "Created date is required";
-    public static final String ERR_MSG_CREATED_BY_REQUIRED = "Created by is required";
 
 }
