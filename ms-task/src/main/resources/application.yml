@@ -73,6 +73,13 @@ feign:
       default:
         connectTimeout: 160000000
         readTimeout: 160000000
+rest:
+  client:
+    sslbypass: true
+    readTimeout: 20000
+    connectTimeout: 20000
+    maxConnectionTotal: 2000
+    defaultMaxRoute: 2000
 config:
   internal:
     api:
@@ -81,7 +88,7 @@ config:
       key: 45e21844-2546-45bd-b4dc-52765949ffd9
   integration:
     ms-audit:
-      url: http://localhost:81/api/audit-service
+      add-audit: http://localhost:81/api/audit-service/audit/v1/add
       key: 4da85148-6e25-4a2e-9744-382adf1c3e9c
 swagger:
   #host: "localhost:${server.port}" #test from local

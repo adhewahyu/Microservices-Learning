@@ -1,5 +1,6 @@
 package com.dan.msaudit.service;
 
+import com.alibaba.fastjson2.JSON;
 import com.dan.msaudit.model.entity.Audit;
 import com.dan.msaudit.model.request.AddAuditRequest;
 import com.dan.msaudit.repository.AuditRepository;
@@ -28,6 +29,8 @@ public class AddAuditService implements BaseService<AddAuditRequest, ValidationR
 
     @Override
     public ValidationResponse execute(AddAuditRequest input) {
+        log.info("AddAuditService - Called");
+        log.info("Request = {}", JSON.toJSONString(input));
         doValidateRequest(input);
         Audit audit = new Audit();
         BeanUtils.copyProperties(input,audit);

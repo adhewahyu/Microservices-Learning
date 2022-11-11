@@ -42,7 +42,7 @@ public class RestConfiguration {
     private Integer defaultMaxRoute;
 
     @Bean(name = "restClientEnhance")
-    public RestTemplate restClientBasic() throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
+    public RestTemplate restClientEnhance() throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
         TrustStrategy acceptingTrustStrategy = (chain, authType) -> true;
         HostnameVerifier hostnameVerifier = (s, sslSession) -> ObjectUtils.isNotEmpty(this.sslBypass) && this.sslBypass;
         SSLContext sslContext = SSLContexts.custom().loadTrustMaterial(null, acceptingTrustStrategy).build();

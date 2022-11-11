@@ -14,8 +14,11 @@ import com.dan.shared.utility.CommonConstants;
 import com.dan.shared.utility.SharedUtility;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Arrays;
 import java.util.Date;
 
 @Service
@@ -51,9 +54,15 @@ public class AddTaskService implements BaseService<AddTaskRequest, ValidationRes
     }
 
     private String resolveActivity(String action, String module){
+        TaskAction taskAction = Arrays.stream(TaskAction.values())
+                .filter(filter -> filter.getValue().equals(action))
+                .findFirst()
+                .orElseThrow(() -> {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Constants.ERR_MSG_TASK_ACTION_INVALID);
+                });
         return "Add New Task" +
                 CommonConstants.COMMON_SEPARATOR +
-                "Action : " + TaskAction.valueOf(action).getMsg() +
+                "Action : " + taskAction.getMsg() +
                 CommonConstants.COMMON_SEPARATOR +
                 "Module : " + module;
     }

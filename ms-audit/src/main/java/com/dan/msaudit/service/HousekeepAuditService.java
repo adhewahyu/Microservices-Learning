@@ -5,10 +5,12 @@ import com.dan.shared.model.request.BaseRequest;
 import com.dan.shared.model.response.ValidationResponse;
 import com.dan.shared.service.BaseService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class HousekeepAuditService implements BaseService<BaseRequest, ValidationResponse> {
 
@@ -19,6 +21,7 @@ public class HousekeepAuditService implements BaseService<BaseRequest, Validatio
 
     @Override
     public ValidationResponse execute(BaseRequest input) {
+        log.info("HousekeepAuditService - Called");
         auditRepository.doHouskeepAudit(intervalHousekeepAudit);
         return ValidationResponse.builder().result(true).build();
     }
