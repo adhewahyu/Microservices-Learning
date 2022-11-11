@@ -25,8 +25,9 @@ public class SubmitTaskService implements BaseService<SubmitTaskRequest, Validat
 
     @Override
     public ValidationResponse execute(SubmitTaskRequest input) {
-        validateTaskService.execute(Constants.TASK_TYPE_SUBMIT, input.getAction(), input.getModule(), input.getTaskAfter(), input.getSubmitBy(), input.getSubmitDate(), input.getId(), input.getStatus());
+        validateTaskService.execute(Constants.TASK_TYPE_SUBMIT, null, input.getModule(), input.getTaskAfter(), input.getSubmitBy(), input.getSubmitDate(), input.getId(), input.getStatus());
         taskRepository.findByIdAndStatus(input.getId(), TaskStatus.NEW.getValue()).ifPresentOrElse(data ->{
+            doValidateTaskModule(input.getModule(), data.getModule());
             data.setTaskBefore(data.getTaskAfter());
             data.setTaskAfter(input.getTaskAfter());
             if(input.getStatus().compareTo(TaskStatus.APPROVED.getValue()) == 0){
@@ -46,6 +47,13 @@ public class SubmitTaskService implements BaseService<SubmitTaskRequest, Validat
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, CommonConstants.ERR_MSG_DATA_NOT_FOUND);
         });
         return ValidationResponse.builder().result(true).build();
+    }
+
+    private void doValidateTaskModule(String inputTaskModule, String sourceTaskModule){
+        if(!inputTaskModule.equals(sourceTaskModule)){
+            log.error("Invalid Task Module");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid Task Module");
+        }
     }
 
 }

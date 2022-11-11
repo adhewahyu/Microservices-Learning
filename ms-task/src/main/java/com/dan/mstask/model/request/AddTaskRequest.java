@@ -12,6 +12,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AddTaskRequest extends BaseTaskRequest {
 
+    @ApiModelProperty(name = "action", example = "I / U / D")
+    private String action;
+
     @ApiModelProperty(name = "Created Date", example = "Date as long milisecond(s)")
     private Long createdDate;
 

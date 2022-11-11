@@ -12,9 +12,6 @@ public class BaseTaskRequest extends BaseRequest {
     @ApiModelProperty(name = "module", example = "MY-MODULE")
     private String module;
 
-    @ApiModelProperty(name = "action", example = "I / U / D")
-    private String action;
-
     @ApiModelProperty(name = "taskAfter", example = "Task After")
     private String taskAfter;
 

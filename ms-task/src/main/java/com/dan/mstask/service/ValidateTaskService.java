@@ -44,6 +44,14 @@ public class ValidateTaskService {
     }
 
     private void doValidateAddTask(String action, String module, String taskAfter, String requester, Long requestDate){
+        if(StringUtils.isEmpty(action)){
+            log.error("Task Action is required");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Task Action is required");
+        }
+        if(!isValidTaskAction(action)){
+            log.error("Invalid Task Action");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid Task Action");
+        }
         doValidateBaseTask(action, module, taskAfter);
         if(StringUtils.isEmpty(requester)){
             log.error("Created By is required");
@@ -80,14 +88,6 @@ public class ValidateTaskService {
     }
 
     private void doValidateBaseTask(String action, String module, String task){
-        if(StringUtils.isEmpty(action)){
-            log.error("Task Action is required");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Task Action is required");
-        }
-        if(!isValidTaskAction(action)){
-            log.error("Invalid Task Action");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid Task Action");
-        }
         if(StringUtils.isEmpty(module)){
             log.error("Task Module is required");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Task Module is required");
