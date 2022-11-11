@@ -1,4 +1,4 @@
-package com.dan.mstask.model.request;
+package com.dan.mstask.model.request.task;
 
 import com.dan.shared.model.request.BaseRequest;
 import io.swagger.annotations.ApiModelProperty;

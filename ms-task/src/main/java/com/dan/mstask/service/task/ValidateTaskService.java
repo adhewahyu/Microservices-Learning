@@ -1,4 +1,4 @@
-package com.dan.mstask.service;
+package com.dan.mstask.service.task;
 
 import com.dan.mstask.enums.TaskAction;
 import com.dan.mstask.enums.TaskStatus;

@@ -1,9 +1,9 @@
 package com.dan.mstask.controller;
 
-import com.dan.mstask.model.request.AddTaskRequest;
-import com.dan.mstask.model.request.SubmitTaskRequest;
-import com.dan.mstask.service.AddTaskService;
-import com.dan.mstask.service.SubmitTaskService;
+import com.dan.mstask.model.request.task.AddTaskRequest;
+import com.dan.mstask.model.request.task.SubmitTaskRequest;
+import com.dan.mstask.service.task.AddTaskService;
+import com.dan.mstask.service.task.SubmitTaskService;
 import com.dan.shared.controller.BaseController;
 import com.dan.shared.enums.MessageCode;
 import com.dan.shared.model.response.RestResponse;

@@ -67,12 +67,22 @@ logging:
         models:
           parameters:
             AbstractSerializableParameter: error
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 160000000
+        readTimeout: 160000000
 config:
   internal:
     api:
       micro:
         path: '/api/task-service'
       key: 45e21844-2546-45bd-b4dc-52765949ffd9
+  integration:
+    ms-audit:
+      url: http://localhost:81/api/audit-service
+      key: 4da85148-6e25-4a2e-9744-382adf1c3e9c
 swagger:
   #host: "localhost:${server.port}" #test from local
   host: "localhost:80" #test using gateway

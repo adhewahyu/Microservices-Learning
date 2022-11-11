@@ -1,4 +1,4 @@
-package com.dan.mstask.model.request;
+package com.dan.mstask.model.request.task;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;

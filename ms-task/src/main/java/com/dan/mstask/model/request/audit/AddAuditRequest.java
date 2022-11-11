@@ -1,5 +1,6 @@
-package com.dan.mstask.model.request;
+package com.dan.mstask.model.request.audit;
 
+import com.dan.shared.model.request.BaseRequest;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,16 +11,20 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AddTaskRequest extends BaseTaskRequest {
+public class AddAuditRequest extends BaseRequest{
 
-    @ApiModelProperty(name = "action", example = "I / U / D")
-    private String action;
+    @ApiModelProperty(name = "module", example = "MY-MODULE")
+    private String module;
+
+    @ApiModelProperty(name = "activity", example = "Approve from MY-MODULE")
+    private String activity;
 
     @ApiModelProperty(name = "Created Date", example = "Date as long milisecond(s)")
     private Long createdDate;
 
     @ApiModelProperty(name = "Created By", example = "User Admin / admin@admin.net")
     private String createdBy;
+
 
 
 }
