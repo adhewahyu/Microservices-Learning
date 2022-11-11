@@ -18,7 +18,7 @@ import java.util.Collections;
 @EnableSwagger2
 public class SwaggerConfiguration {
 
-    private static final Tag API_AUDIT = new Tag("Microservice Task APIs", "Provide APIs for Task Operations.");
+    private static final Tag API_TASKS = new Tag("Microservice Task APIs", "Provide APIs for Task Operations.");
 
     @Value("${swagger.host}")
     private String swaggerHost;
@@ -45,7 +45,7 @@ public class SwaggerConfiguration {
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.dan.mstask.controller"))
                 .build().groupName("All APIs")
-                .tags(API_AUDIT);
+                .tags(API_TASKS);
     }
     
     @Bean
@@ -54,7 +54,7 @@ public class SwaggerConfiguration {
             .paths(PathSelectors.regex("/task/v1/add")
                     .or(PathSelectors.regex("/task/v1/search")))
             .build()
-            .tags(API_AUDIT);
+            .tags(API_TASKS);
     }
     
 

@@ -1,0 +1,96 @@
+redis:
+  host: localhost
+  password:
+  port: 6379
+  dbIndex: 0
+  maxIdle: 50
+  minIdle: 50
+  maxTotal: 50
+  timeout: 5
+  maxWait: 10
+  shutdown: 100
+server:
+  port: 83
+  error:
+    include-message: always
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  application:
+    name: ms-masterdata service
+  datasource:
+    name: datasource
+    url: jdbc:postgresql://localhost:5432/msmasterdata
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    platform: postgres
+    filters: stat
+    maxActive: 80
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 80
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      max-lifetime: 1800000
+      maximum-pool-size : 80
+      minimum-idle: 10
+      pool-name : MsMasterDataConnPool
+  jpa:
+    hibernate:
+      ddl-auto: update
+      connection:
+        provider_class : "com.zaxxer.hikari.hibernate.HikariConnectionProvider"
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        hbm2ddl.auto: update
+        jdbc.lob.non_contextual_creation: true
+        order_updates: true
+        batch_versioned_data: true
+  webflux:
+    base-path: "/api/masterdata-service"
+logging:
+  level:
+    io:
+      swagger:
+        models:
+          parameters:
+            AbstractSerializableParameter: error
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 160000000
+        readTimeout: 160000000
+rest:
+  client:
+    sslbypass: true
+    readTimeout: 20000
+    connectTimeout: 20000
+    maxConnectionTotal: 2000
+    defaultMaxRoute: 2000
+config:
+  internal:
+    api:
+      micro:
+        path: '/api/masterdata-service'
+      key: f789957c-a78a-421d-bb0e-c6b2b72ecd2b
+  integration:
+    ms-audit:
+      add-audit: http://localhost:81/api/audit-service/audit/v1/add
+      key: 4da85148-6e25-4a2e-9744-382adf1c3e9c
+swagger:
+  #host: "localhost:${server.port}" #test from local
+  host: "localhost:80" #test using gateway
+
