@@ -17,7 +17,7 @@
     <properties>
         <java.version>11</java.version>
         <apache-common-lang3.version>3.12.0</apache-common-lang3.version>
-        <alibaba-fastjson2.version>2.0.16</alibaba-fastjson2.version>
+        <alibaba-fastjson2.version>2.0.18</alibaba-fastjson2.version>
         <apache-common-pool2.version>2.11.1</apache-common-pool2.version>
         <springfox-swagger.version>3.0.0</springfox-swagger.version>
         <apache-common-io.version>2.11.0</apache-common-io.version>
