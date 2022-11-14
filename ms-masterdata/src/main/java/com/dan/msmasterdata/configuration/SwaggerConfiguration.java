@@ -1,4 +1,4 @@
-package com.dan.mstask.configuration;
+package com.dan.msmasterdata.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +18,8 @@ import java.util.Collections;
 @EnableSwagger2
 public class SwaggerConfiguration {
 
-    private static final Tag API_TASKS = new Tag("Microservice Task APIs", "Provide APIs for Task Operations.");
+    private static final Tag API_PROVINCE = new Tag("Province APIs", "Provide APIs for Province Operations.");
+    private static final Tag API_CITY = new Tag("City APIs", "Provide APIs for City Operations.");
 
     @Value("${swagger.host}")
     private String swaggerHost;
@@ -27,14 +28,14 @@ public class SwaggerConfiguration {
         return new Docket(DocumentationType.SWAGGER_2)
         		.host(swaggerHost)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.dan.mstask.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.dan.msmasterdata.controller"))
                 .build()
                 .apiInfo(getDefaultApiInfo())
                 .useDefaultResponseMessages(false);
     }
     
     private ApiInfo getDefaultApiInfo() {
-        return new ApiInfo("MS Task Docs", "API sandbox for Task service. Only for development purpose and API discovery.", "v1.11", "http://swagger.io/terms/",
+        return new ApiInfo("MS Master Data Docs", "API sandbox for Master Data service. Only for development purpose and API discovery.", "v1.11", "http://swagger.io/terms/",
     		new Contact("Developer", "", "adhe.wahyu.ardanto@gmail.com"),
     		"Apache 2.0", "http://www.apache.org/licenses/LICENSE-2.0", Collections.emptyList());
 	}
@@ -43,18 +44,24 @@ public class SwaggerConfiguration {
     public Docket docket() {
         return getBaseDocket()
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.dan.mstask.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.dan.msmasterdata.controller"))
                 .build().groupName("All APIs")
-                .tags(API_TASKS);
+                .tags(API_PROVINCE, API_CITY);
     }
     
     @Bean
-    public Docket taskDocket(){
-        return getBaseDocket().groupName("Task Recipe").select()
-            .paths(PathSelectors.regex("/task/v1/add")
-                    .or(PathSelectors.regex("/task/v1/search")))
+    public Docket locationDocket(){
+        return getBaseDocket().groupName("Location Recipe").select()
+            .paths(PathSelectors.regex("/province/v1/add")
+                    .or(PathSelectors.regex("/province/v1/update"))
+                    .or(PathSelectors.regex("/province/v1/delete"))
+
+                    .or(PathSelectors.regex("/city/v1/add"))
+                    .or(PathSelectors.regex("/city/v1/update"))
+                    .or(PathSelectors.regex("/city/v1/delete"))
+            )
             .build()
-            .tags(API_TASKS);
+            .tags(API_PROVINCE, API_CITY);
     }
     
 

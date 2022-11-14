@@ -1,9 +1,9 @@
 package com.dan.mstask.service.task;
 
-import com.dan.mstask.enums.TaskStatus;
 import com.dan.mstask.model.request.task.SubmitTaskRequest;
 import com.dan.mstask.repository.TaskRepository;
 import com.dan.mstask.utility.Constants;
+import com.dan.shared.enums.TaskStatus;
 import com.dan.shared.model.response.ValidationResponse;
 import com.dan.shared.service.BaseService;
 import com.dan.shared.utility.CommonConstants;

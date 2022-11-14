@@ -87,9 +87,9 @@ config:
         path: '/api/masterdata-service'
       key: f789957c-a78a-421d-bb0e-c6b2b72ecd2b
   integration:
-    ms-audit:
-      add-audit: http://localhost:81/api/audit-service/audit/v1/add
-      key: 4da85148-6e25-4a2e-9744-382adf1c3e9c
+    ms-task:
+      add-task: http://localhost:82/api/task-service/task/v1/add
+      key: 45e21844-2546-45bd-b4dc-52765949ffd9
 swagger:
   #host: "localhost:${server.port}" #test from local
   host: "localhost:80" #test using gateway

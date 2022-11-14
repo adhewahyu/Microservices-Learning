@@ -1,4 +1,4 @@
-package com.dan.mstask.enums;
+package com.dan.shared.enums;
 
 import java.util.HashMap;
 import java.util.Map;

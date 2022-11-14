@@ -1,13 +1,13 @@
 package com.dan.mstask.service.task;
 
-import com.dan.mstask.enums.TaskAction;
-import com.dan.mstask.enums.TaskStatus;
 import com.dan.mstask.model.entity.Task;
 import com.dan.mstask.model.request.audit.AddAuditRequest;
 import com.dan.mstask.model.request.task.AddTaskRequest;
 import com.dan.mstask.repository.TaskRepository;
 import com.dan.mstask.service.audit.AddAuditAsyncService;
 import com.dan.mstask.utility.Constants;
+import com.dan.shared.enums.TaskAction;
+import com.dan.shared.enums.TaskStatus;
 import com.dan.shared.model.response.ValidationResponse;
 import com.dan.shared.service.BaseService;
 import com.dan.shared.utility.CommonConstants;

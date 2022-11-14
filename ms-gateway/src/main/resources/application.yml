@@ -44,6 +44,10 @@ gateway:
       path: "/api/task-service/**"
       url: "http://localhost:82/api/task-service"
       apiKey: 45e21844-2546-45bd-b4dc-52765949ffd9
+    - id: ms-masterdata
+      path: "/api/masterdata-service/**"
+      url: "http://localhost:83/api/masterdata-service"
+      apiKey: f789957c-a78a-421d-bb0e-c6b2b72ecd2b
 client:
   endpoints:
     - http://localhost:4200

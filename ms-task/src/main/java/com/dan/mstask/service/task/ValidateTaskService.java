@@ -1,8 +1,8 @@
 package com.dan.mstask.service.task;
 
-import com.dan.mstask.enums.TaskAction;
-import com.dan.mstask.enums.TaskStatus;
 import com.dan.mstask.utility.Constants;
+import com.dan.shared.enums.TaskAction;
+import com.dan.shared.enums.TaskStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
