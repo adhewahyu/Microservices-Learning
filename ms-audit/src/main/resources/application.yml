@@ -70,7 +70,7 @@ logging:
 config:
   housekeep:
     interval:
-      audit: 7 days
+      audit: "7 days"
   scheduler:
     audit:
       doHousekeepAudit: "0 0 4 * * ?" #everyday 4:00:00 a.m.

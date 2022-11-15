@@ -14,8 +14,4 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface AuditRepository extends JpaRepository<Audit, String>, JpaSpecificationExecutor<Audit> {
 
-    @Modifying(clearAutomatically = true)
-    @Query(value = "DELETE FROM AUDITS WHERE CREATED_DATE <  (CURRENT_DATE - interval :interval)", nativeQuery = true)
-    void doHouskeepAudit(@Param("interval") String interval);
-
 }
