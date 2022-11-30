@@ -1,6 +1,6 @@
-package com.dan.mstask.adaptor.rest;
+package com.dan.mstask.adaptor.rest.province;
 
-import com.dan.mstask.model.request.audit.AddAuditRequest;
+import com.dan.mstask.model.request.province.AddProvinceByTaskRequest;
 import com.dan.shared.adaptor.RestAdaptor;
 import com.dan.shared.model.request.EsbRequest;
 import com.dan.shared.model.response.ValidationResponse;
@@ -19,24 +19,24 @@ import org.springframework.web.server.ResponseStatusException;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class AddAuditAdaptor extends RestAdaptor<AddAuditRequest, ValidationResponse> {
+public class AddProvinceByTaskAdaptor extends RestAdaptor<AddProvinceByTaskRequest, ValidationResponse> {
 
-    @Value("${config.integration.ms-audit.add-audit}")
-    private String addAuditUrl;
+    @Value("${config.integration.ms-masterdata.add-province-by-task}")
+    private String addProvinceByTaskUrl;
 
-    @Value("${config.integration.ms-audit.key}")
-    private String msAuditInternalApiKey;
+    @Value("${config.integration.ms-masterdata.key}")
+    private String msMasterDataInternalApiKey;
 
     private final RestTemplate restClientEnhance;
 
     @Override
-    public ValidationResponse execute(AddAuditRequest addAuditRequest) {
+    public ValidationResponse execute(AddProvinceByTaskRequest request) {
         this.setEnableDebug(true);
         this.setHttpMethod(HttpMethod.POST);
         this.setRestTemplate(restClientEnhance);
-        this.setUrl(addAuditUrl);
+        this.setUrl(addProvinceByTaskUrl);
         try{
-            ResponseEntity<String> responseEntity = super.getResponse(generatePayload(addAuditRequest));
+            ResponseEntity<String> responseEntity = super.getResponse(generatePayload(request));
             log.info("Response = {} - {}", responseEntity.getStatusCodeValue(), responseEntity.getBody());
             return ValidationResponse.builder().result(true).build();
         }catch (HttpClientErrorException | HttpServerErrorException hse){
@@ -49,9 +49,9 @@ public class AddAuditAdaptor extends RestAdaptor<AddAuditRequest, ValidationResp
     }
 
     @Override
-    protected EsbRequest generatePayload(AddAuditRequest request) {
+    protected EsbRequest generatePayload(AddProvinceByTaskRequest request) {
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.set(CommonConstants.REQ_HEADER_APIKEY, msAuditInternalApiKey);
+        httpHeaders.set(CommonConstants.REQ_HEADER_APIKEY, msMasterDataInternalApiKey);
         return EsbRequest.builder()
                 .payload(new HttpEntity(request, httpHeaders))
                 .isPlain(true)

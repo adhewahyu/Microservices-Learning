@@ -1,16 +1,13 @@
 package com.dan.msmasterdata.controller;
 
 import com.dan.msmasterdata.model.entity.Province;
+import com.dan.msmasterdata.model.request.province.AddProvinceByTaskRequest;
 import com.dan.msmasterdata.model.request.province.AddProvinceRequest;
 import com.dan.msmasterdata.model.request.province.DeleteProvinceRequest;
 import com.dan.msmasterdata.model.request.province.UpdateProvinceRequest;
-import com.dan.msmasterdata.service.province.AddProvinceService;
-import com.dan.msmasterdata.service.province.DeleteProvinceService;
-import com.dan.msmasterdata.service.province.SearchProvinceService;
-import com.dan.msmasterdata.service.province.UpdateProvinceService;
+import com.dan.msmasterdata.service.province.*;
 import com.dan.msmasterdata.utility.Constants;
 import com.dan.shared.controller.BaseController;
-import com.dan.shared.enums.BooleanStatus;
 import com.dan.shared.enums.MessageCode;
 import com.dan.shared.model.request.SearchRequest;
 import com.dan.shared.model.request.SpecificationRequest;
@@ -36,6 +33,7 @@ import java.util.List;
 public class ProvinceController extends BaseController {
 
     private final AddProvinceService addProvinceService;
+    private final AddProvinceByTaskService addProvinceByTaskService;
     private final UpdateProvinceService updateProvinceService;
     private final DeleteProvinceService deleteProvinceService;
     private final SearchProvinceService searchProvinceService;
@@ -45,6 +43,14 @@ public class ProvinceController extends BaseController {
             @RequestHeader(CommonConstants.REQ_HEADER_APIKEY) String apiKey,
             @RequestBody AddProvinceRequest addProvinceRequest){
         ValidationResponse validationResponse = addProvinceService.execute(addProvinceRequest);
+        return Mono.just(new ResponseEntity<>( new RestResponse(null, CommonConstants.SUCCESS_MSG_DATA_SUBMITTED, MessageCode.OK.getValue(), validationResponse.getResult()), HttpStatus.OK));
+    }
+
+    @PostMapping("/v1/add-province-by-task")
+    public Mono<ResponseEntity<RestResponse>> addProvince(
+            @RequestHeader(CommonConstants.REQ_HEADER_APIKEY) String apiKey,
+            @RequestBody AddProvinceByTaskRequest addProvinceByTaskRequest){
+        ValidationResponse validationResponse = addProvinceByTaskService.execute(addProvinceByTaskRequest);
         return Mono.just(new ResponseEntity<>( new RestResponse(null, CommonConstants.SUCCESS_MSG_DATA_SUBMITTED, MessageCode.OK.getValue(), validationResponse.getResult()), HttpStatus.OK));
     }
 
@@ -70,7 +76,7 @@ public class ProvinceController extends BaseController {
             SearchRequest searchRequest) {
         Specification<Province> specs = Specification.where((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
-            predicates.add(criteriaBuilder.equal(root.get(Constants.FLD_DELETED), BooleanStatus.PG_FALSE.getValue()));
+            predicates.add(criteriaBuilder.equal(root.get(Constants.FLD_DELETED), false));
             return criteriaBuilder.and(predicates.toArray(new Predicate[] {}));
         });
         return this.getPageResponse(searchProvinceService.execute(SpecificationRequest.builder()

@@ -1,6 +1,6 @@
 package com.dan.mstask.service.audit;
 
-import com.dan.mstask.adaptor.rest.AddAuditAdaptor;
+import com.dan.mstask.adaptor.rest.audit.AddAuditAdaptor;
 import com.dan.mstask.model.request.audit.AddAuditRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

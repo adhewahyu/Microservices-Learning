@@ -1,5 +1,9 @@
 package com.dan.mstask.service.task;
 
+import com.alibaba.fastjson2.JSON;
+import com.dan.mstask.adaptor.rest.province.AddProvinceByTaskAdaptor;
+import com.dan.mstask.model.entity.Task;
+import com.dan.mstask.model.request.province.AddProvinceByTaskRequest;
 import com.dan.mstask.model.request.task.SubmitTaskRequest;
 import com.dan.mstask.repository.TaskRepository;
 import com.dan.mstask.utility.Constants;
@@ -11,17 +15,23 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Date;
 
+import static com.dan.mstask.utility.Constants.MODULE_PROVINCE;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
+@Transactional(propagation = Propagation.REQUIRES_NEW)
 public class SubmitTaskService implements BaseService<SubmitTaskRequest, ValidationResponse> {
 
     private final TaskRepository taskRepository;
     private final ValidateTaskService validateTaskService;
+    private final AddProvinceByTaskAdaptor addProvinceByTaskAdaptor;
 
     @Override
     public ValidationResponse execute(SubmitTaskRequest input) {
@@ -35,6 +45,7 @@ public class SubmitTaskService implements BaseService<SubmitTaskRequest, Validat
                 data.setStatus(TaskStatus.APPROVED.getValue());
                 data.setApprovedBy(input.getSubmitBy());
                 data.setApprovedDate(new Date(input.getSubmitDate()));
+                this.doCallSubmitApiByTaskModule(data);
             }else {
                 log.info("Set task with id = {} as REJECTED", input.getId());
                 data.setStatus(TaskStatus.REJECTED.getValue());
@@ -53,6 +64,16 @@ public class SubmitTaskService implements BaseService<SubmitTaskRequest, Validat
         if(!inputTaskModule.equals(sourceTaskModule)){
             log.error("Invalid Task Module for task id = {}", inputId);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Constants.ERR_MSG_TASK_MODULE_INVALID);
+        }
+    }
+
+    private void doCallSubmitApiByTaskModule(Task approvedTask){
+        switch (approvedTask.getModule()){
+            case MODULE_PROVINCE:
+                addProvinceByTaskAdaptor.execute(JSON.parseObject(approvedTask.getTaskAfter(), AddProvinceByTaskRequest.class));
+                break;
+            default:
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Constants.ERR_MSG_TASK_MODULE_INVALID);
         }
     }
 
