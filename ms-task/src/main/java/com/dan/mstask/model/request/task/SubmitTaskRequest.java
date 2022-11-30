@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SubmitTaskRequest extends BaseTaskRequest {
 
-    @ApiModelProperty(name = "Task ID", example = "1")
+    @ApiModelProperty(name = "Task ID", example = "1234-1234-1234")
     private String id;
 
     @ApiModelProperty(name = "Task Status", example = "1 (Approve) / 2 (Reject)")
