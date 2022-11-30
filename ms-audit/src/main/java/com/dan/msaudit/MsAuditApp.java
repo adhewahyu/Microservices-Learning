@@ -2,6 +2,7 @@ package com.dan.msaudit;
 
 import com.dan.shared.utility.PermissionUtility;
 import com.dan.shared.utility.SharedUtility;
+import net.javacrumbs.shedlock.spring.annotation.EnableSchedulerLock;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -19,6 +20,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @ComponentScan(value = {"com.dan.msaudit"})
 @EntityScan("com.dan.msaudit.model.entity")
 @EnableJpaRepositories("com.dan.msaudit.repository")
+@EnableSchedulerLock(defaultLockAtMostFor = "21s")
 @SpringBootApplication
 public class MsAuditApp {
 

@@ -2,6 +2,7 @@ package com.dan.mstask;
 
 import com.dan.shared.configuration.RestConfiguration;
 import com.dan.shared.utility.SharedUtility;
+import net.javacrumbs.shedlock.spring.annotation.EnableSchedulerLock;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -19,6 +20,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EntityScan("com.dan.mstask.model.entity")
 @EnableJpaRepositories("com.dan.mstask.repository")
 @EnableAsync
+@EnableSchedulerLock(defaultLockAtMostFor = "21s")
 @SpringBootApplication
 public class MsTaskApp {
 

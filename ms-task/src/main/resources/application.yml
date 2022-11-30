@@ -81,6 +81,12 @@ rest:
     maxConnectionTotal: 2000
     defaultMaxRoute: 2000
 config:
+  housekeep:
+    interval:
+      task: "7 days"
+  scheduler:
+    audit:
+      doHousekeepTask: "0 0 4 * * ?" #everyda
   internal:
     api:
       micro:

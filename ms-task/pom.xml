@@ -16,6 +16,7 @@
     <properties>
         <java.version>11</java.version>
         <shared.version>0.0.1-SNAPSHOT</shared.version>
+        <shedlock.version>4.42.0</shedlock.version>
     </properties>
     <dependencies>
         <dependency>
@@ -49,6 +50,17 @@
                 </exclusion>
             </exclusions>
             <version>${shared.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.javacrumbs.shedlock</groupId>
+            <artifactId>shedlock-spring</artifactId>
+            <version>${shedlock.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.javacrumbs.shedlock</groupId>
+            <artifactId>shedlock-provider-jdbc-template</artifactId>
+            <version>${shedlock.version}</version>
         </dependency>
 
     </dependencies>
