@@ -14,6 +14,10 @@ server:
   error:
     include-message: always
 spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: ms-masterdata-group
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher

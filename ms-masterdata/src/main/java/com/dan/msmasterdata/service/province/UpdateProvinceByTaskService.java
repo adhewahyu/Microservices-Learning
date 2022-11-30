@@ -1,7 +1,9 @@
 package com.dan.msmasterdata.service.province;
 
 import com.dan.msmasterdata.model.request.province.UpdateProvinceByTaskRequest;
+import com.dan.msmasterdata.queue.publisher.province.PublishProvinceService;
 import com.dan.msmasterdata.repository.ProvinceRepository;
+import com.dan.shared.model.request.BaseRequest;
 import com.dan.shared.model.response.ValidationResponse;
 import com.dan.shared.service.BaseService;
 import com.dan.shared.utility.CommonConstants;
@@ -22,6 +24,7 @@ import java.util.Date;
 public class UpdateProvinceByTaskService implements BaseService<UpdateProvinceByTaskRequest, ValidationResponse> {
 
     private final ProvinceRepository provinceRepository;
+    private final PublishProvinceService publishProvinceService;
 
     @Override
     public ValidationResponse execute(UpdateProvinceByTaskRequest input) {
@@ -33,6 +36,7 @@ public class UpdateProvinceByTaskService implements BaseService<UpdateProvinceBy
             data.setUpdatedBy(input.getUpdatedBy());
             data.setUpdatedDate(new Date(input.getUpdatedDate()));
             provinceRepository.save(data);
+            publishProvinceService.execute(new BaseRequest());
         },()->{
             log.error("Province with id = {} not found",input.getId());
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, CommonConstants.ERR_MSG_DATA_NOT_FOUND);

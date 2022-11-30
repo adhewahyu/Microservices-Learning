@@ -5,11 +5,13 @@ import com.dan.mstask.adaptor.rest.province.AddProvinceByTaskAdaptor;
 import com.dan.mstask.adaptor.rest.province.DeleteProvinceByTaskAdaptor;
 import com.dan.mstask.adaptor.rest.province.UpdateProvinceByTaskAdaptor;
 import com.dan.mstask.model.entity.Task;
+import com.dan.mstask.model.request.audit.AddAuditRequest;
 import com.dan.mstask.model.request.province.AddProvinceByTaskRequest;
 import com.dan.mstask.model.request.province.DeleteProvinceByTaskRequest;
 import com.dan.mstask.model.request.province.UpdateProvinceByTaskRequest;
 import com.dan.mstask.model.request.task.SubmitTaskRequest;
 import com.dan.mstask.repository.TaskRepository;
+import com.dan.mstask.service.audit.AddAuditAsyncService;
 import com.dan.mstask.utility.Constants;
 import com.dan.shared.enums.TaskAction;
 import com.dan.shared.enums.TaskStatus;
@@ -40,6 +42,7 @@ public class SubmitTaskService implements BaseService<SubmitTaskRequest, Validat
     private final AddProvinceByTaskAdaptor addProvinceByTaskAdaptor;
     private final UpdateProvinceByTaskAdaptor updateProvinceByTaskAdaptor;
     private final DeleteProvinceByTaskAdaptor deleteProvinceByTaskAdaptor;
+    private final AddAuditAsyncService addAuditAsyncService;
 
     @Override
     public ValidationResponse execute(SubmitTaskRequest input) {
@@ -54,11 +57,13 @@ public class SubmitTaskService implements BaseService<SubmitTaskRequest, Validat
                 data.setApprovedBy(input.getSubmitBy());
                 data.setApprovedDate(new Date(input.getSubmitDate()));
                 this.doCallSubmitApiByTaskModule(data);
+                this.doCallAudit(input, TaskStatus.APPROVED);
             }else {
                 log.info("Set task with id = {} as REJECTED", input.getId());
                 data.setStatus(TaskStatus.REJECTED.getValue());
                 data.setRejectedBy(input.getSubmitBy());
                 data.setRejectedDate(new Date(input.getSubmitDate()));
+                this.doCallAudit(input, TaskStatus.REJECTED);
             }
             taskRepository.save(data);
         },()->{
@@ -97,5 +102,24 @@ public class SubmitTaskService implements BaseService<SubmitTaskRequest, Validat
             deleteProvinceByTaskAdaptor.execute(JSON.parseObject(approvedTask.getTaskAfter(), DeleteProvinceByTaskRequest.class));
         }
     }
+
+    private void doCallAudit(SubmitTaskRequest input, TaskStatus taskStatus){
+        addAuditAsyncService.execute(AddAuditRequest.builder()
+                .module(input.getModule())
+                .activity(resolveActivity(taskStatus, input.getModule()))
+                .createdBy(input.getSubmitBy())
+                .createdDate(input.getSubmitDate())
+                .build());
+    }
+
+    private String resolveActivity(TaskStatus taskStatus, String module){
+        return "Submit Task" +
+                CommonConstants.COMMON_SEPARATOR +
+                "Action : " + taskStatus.getMsg() +
+                CommonConstants.COMMON_SEPARATOR +
+                "Module : " + module;
+    }
+
+
 
 }

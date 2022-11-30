@@ -2,7 +2,9 @@ package com.dan.msmasterdata.service.province;
 
 import com.dan.msmasterdata.model.entity.Province;
 import com.dan.msmasterdata.model.request.province.AddProvinceByTaskRequest;
+import com.dan.msmasterdata.queue.publisher.province.PublishProvinceService;
 import com.dan.msmasterdata.repository.ProvinceRepository;
+import com.dan.shared.model.request.BaseRequest;
 import com.dan.shared.model.response.ValidationResponse;
 import com.dan.shared.service.BaseService;
 import com.dan.shared.utility.SharedUtility;
@@ -22,6 +24,7 @@ public class AddProvinceByTaskService implements BaseService<AddProvinceByTaskRe
 
     private final ProvinceRepository provinceRepository;
     private final SharedUtility sharedUtility;
+    private final PublishProvinceService publishProvinceService;
 
     @Override
     public ValidationResponse execute(AddProvinceByTaskRequest input) {
@@ -35,6 +38,7 @@ public class AddProvinceByTaskService implements BaseService<AddProvinceByTaskRe
         newProvince.setCreatedBy(input.getCreatedBy());
         newProvince.setCreatedDate(new Date(input.getCreatedDate()));
         provinceRepository.save(newProvince);
+        publishProvinceService.execute(new BaseRequest());
         return ValidationResponse.builder().result(true).build();
     }
 
