@@ -34,6 +34,7 @@ public class ProvinceController extends BaseController {
     private final UpdateProvinceService updateProvinceService;
     private final UpdateProvinceByTaskService updateProvinceByTaskService;
     private final DeleteProvinceService deleteProvinceService;
+    private final DeleteProvinceByTaskService deleteProvinceByTaskService;
     private final SearchProvinceService searchProvinceService;
 
     @PostMapping("/v1/add")
@@ -73,6 +74,14 @@ public class ProvinceController extends BaseController {
             @RequestHeader(CommonConstants.REQ_HEADER_APIKEY) String apiKey,
             @RequestBody DeleteProvinceRequest deleteProvinceRequest){
         ValidationResponse validationResponse = deleteProvinceService.execute(deleteProvinceRequest);
+        return Mono.just(new ResponseEntity<>( new RestResponse(null, CommonConstants.SUCCESS_MSG_DATA_SUBMITTED, MessageCode.OK.getValue(), validationResponse.getResult()), HttpStatus.OK));
+    }
+
+    @PostMapping("/v1/delete-province-by-task")
+    public Mono<ResponseEntity<RestResponse>> addProvince(
+            @RequestHeader(CommonConstants.REQ_HEADER_APIKEY) String apiKey,
+            @RequestBody DeleteProvinceByTaskRequest deleteProvinceByTaskRequest){
+        ValidationResponse validationResponse = deleteProvinceByTaskService.execute(deleteProvinceByTaskRequest);
         return Mono.just(new ResponseEntity<>( new RestResponse(null, CommonConstants.SUCCESS_MSG_DATA_SUBMITTED, MessageCode.OK.getValue(), validationResponse.getResult()), HttpStatus.OK));
     }
 

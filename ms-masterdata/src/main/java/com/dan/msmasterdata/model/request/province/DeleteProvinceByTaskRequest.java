@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DeleteProvinceRequest extends BaseRequest {
+public class DeleteProvinceByTaskRequest extends BaseRequest {
 
     @ApiModelProperty(example ="1234-1234", value="ID Reference to Find")
     private String id;

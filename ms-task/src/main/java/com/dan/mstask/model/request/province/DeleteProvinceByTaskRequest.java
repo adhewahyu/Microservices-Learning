@@ -1,4 +1,4 @@
-package com.dan.msmasterdata.model.request.province;
+package com.dan.mstask.model.request.province;
 
 import com.dan.shared.model.request.BaseRequest;
 import io.swagger.annotations.ApiModelProperty;
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DeleteProvinceRequest extends BaseRequest {
+public class DeleteProvinceByTaskRequest extends BaseRequest {
 
     @ApiModelProperty(example ="1234-1234", value="ID Reference to Find")
     private String id;

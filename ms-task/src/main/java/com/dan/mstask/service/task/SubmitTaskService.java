@@ -2,9 +2,11 @@ package com.dan.mstask.service.task;
 
 import com.alibaba.fastjson2.JSON;
 import com.dan.mstask.adaptor.rest.province.AddProvinceByTaskAdaptor;
+import com.dan.mstask.adaptor.rest.province.DeleteProvinceByTaskAdaptor;
 import com.dan.mstask.adaptor.rest.province.UpdateProvinceByTaskAdaptor;
 import com.dan.mstask.model.entity.Task;
 import com.dan.mstask.model.request.province.AddProvinceByTaskRequest;
+import com.dan.mstask.model.request.province.DeleteProvinceByTaskRequest;
 import com.dan.mstask.model.request.province.UpdateProvinceByTaskRequest;
 import com.dan.mstask.model.request.task.SubmitTaskRequest;
 import com.dan.mstask.repository.TaskRepository;
@@ -37,6 +39,7 @@ public class SubmitTaskService implements BaseService<SubmitTaskRequest, Validat
     private final ValidateTaskService validateTaskService;
     private final AddProvinceByTaskAdaptor addProvinceByTaskAdaptor;
     private final UpdateProvinceByTaskAdaptor updateProvinceByTaskAdaptor;
+    private final DeleteProvinceByTaskAdaptor deleteProvinceByTaskAdaptor;
 
     @Override
     public ValidationResponse execute(SubmitTaskRequest input) {
@@ -91,7 +94,7 @@ public class SubmitTaskService implements BaseService<SubmitTaskRequest, Validat
         }else if(approvedTask.getAction().equals(TaskAction.UPDATE.getValue())){
             updateProvinceByTaskAdaptor.execute(JSON.parseObject(approvedTask.getTaskAfter(), UpdateProvinceByTaskRequest.class));
         }else if(approvedTask.getAction().equals(TaskAction.DELETE.getValue())){
-            //delete
+            deleteProvinceByTaskAdaptor.execute(JSON.parseObject(approvedTask.getTaskAfter(), DeleteProvinceByTaskRequest.class));
         }
     }
 
