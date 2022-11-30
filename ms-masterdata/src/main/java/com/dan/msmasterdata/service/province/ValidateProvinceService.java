@@ -60,6 +60,10 @@ public class ValidateProvinceService {
 
     private void doValidateAddProvince(String provinceCode, String provinceName, String submitBy, Long submitDate){
         doValidateBaseProvince(provinceCode, provinceName);
+        if(provinceRepository.countProvinceByProvinceCode(provinceCode) > 0 || provinceRepository.countProvinceByProvinceName(provinceName) > 0){
+            log.error("Duplicate province code / name");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Province code or name already exists");
+        }
         if(StringUtils.isEmpty(submitBy)){
             log.error("Created By is required");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Created By is required");
