@@ -2,9 +2,11 @@ package com.dan.shared.utility;
 
 import com.dan.shared.enums.RegexType;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -51,6 +53,10 @@ public class SharedUtility {
                 Objects.requireNonNull(defaultRegexPattern) : regexPattern);
         Matcher matcher = pattern.matcher(input);
         return matcher.matches();
+    }
+
+    public Long getDateOrReturnNull(Date inputDate){
+        return ObjectUtils.isEmpty(inputDate) ? null : inputDate.getTime();
     }
 
 }

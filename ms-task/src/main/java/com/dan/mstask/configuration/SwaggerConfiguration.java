@@ -52,6 +52,7 @@ public class SwaggerConfiguration {
     public Docket taskDocket(){
         return getBaseDocket().groupName("Task Recipe").select()
             .paths(PathSelectors.regex("/task/v1/add")
+                    .or(PathSelectors.regex("/task/v1/submit"))
                     .or(PathSelectors.regex("/task/v1/search")))
             .build()
             .tags(API_TASKS);
