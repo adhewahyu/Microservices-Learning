@@ -12,4 +12,7 @@ public class Constants {
 
     public static final String ERR_MSG_UNKNOWN_TASK_TYPE = "Unknown validation task type";
 
+    public static final String FLD_DELETED = "isDeleted";
+    public static final String FLD_ACTIVE = "isActive";
+
 }

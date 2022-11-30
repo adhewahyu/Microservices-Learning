@@ -66,7 +66,7 @@ public class TaskController extends BaseController {
             SearchRequest searchRequest) {
         Specification<Task> specs = Specification.where((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
-            predicates.add(criteriaBuilder.equal(root.get(Constants.STATUS), TaskStatus.NEW.getValue()));
+            predicates.add(criteriaBuilder.equal(root.get(Constants.FLD_STATUS), TaskStatus.NEW.getValue()));
             return criteriaBuilder.and(predicates.toArray(new Predicate[] {}));
         });
         return this.getPageResponse(searchTaskService.execute(SpecificationRequest.builder()

@@ -19,6 +19,6 @@ public class Constants {
     public static final String ERR_MSG_TASK_MODULE_INVALID = "Invalid Task Module";
     public static final String ERR_MSG_TASK_AFTER_REQUIRED = "Task After is required";
 
-    public static final String STATUS = "status";
+    public static final String FLD_STATUS = "status";
 
 }
