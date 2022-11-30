@@ -26,6 +26,7 @@ public class RefreshProvinceService implements BaseService<BaseRequest, Validati
 
     @Override
     public ValidationResponse execute(BaseRequest input) {
+        log.info("RefreshProvinceService - Called");
         List<ProvinceResponse> provinceResponseList = provinceRepository.findAllActiveProvince()
                 .stream()
                 .map(data -> ProvinceResponse.builder()
