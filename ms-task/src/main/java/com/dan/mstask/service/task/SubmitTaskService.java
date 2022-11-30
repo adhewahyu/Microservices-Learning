@@ -2,11 +2,14 @@ package com.dan.mstask.service.task;
 
 import com.alibaba.fastjson2.JSON;
 import com.dan.mstask.adaptor.rest.province.AddProvinceByTaskAdaptor;
+import com.dan.mstask.adaptor.rest.province.UpdateProvinceByTaskAdaptor;
 import com.dan.mstask.model.entity.Task;
 import com.dan.mstask.model.request.province.AddProvinceByTaskRequest;
+import com.dan.mstask.model.request.province.UpdateProvinceByTaskRequest;
 import com.dan.mstask.model.request.task.SubmitTaskRequest;
 import com.dan.mstask.repository.TaskRepository;
 import com.dan.mstask.utility.Constants;
+import com.dan.shared.enums.TaskAction;
 import com.dan.shared.enums.TaskStatus;
 import com.dan.shared.model.response.ValidationResponse;
 import com.dan.shared.service.BaseService;
@@ -21,6 +24,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Date;
 
+import static com.dan.mstask.utility.Constants.MODULE_CITY;
 import static com.dan.mstask.utility.Constants.MODULE_PROVINCE;
 
 @Service
@@ -32,6 +36,7 @@ public class SubmitTaskService implements BaseService<SubmitTaskRequest, Validat
     private final TaskRepository taskRepository;
     private final ValidateTaskService validateTaskService;
     private final AddProvinceByTaskAdaptor addProvinceByTaskAdaptor;
+    private final UpdateProvinceByTaskAdaptor updateProvinceByTaskAdaptor;
 
     @Override
     public ValidationResponse execute(SubmitTaskRequest input) {
@@ -70,10 +75,23 @@ public class SubmitTaskService implements BaseService<SubmitTaskRequest, Validat
     private void doCallSubmitApiByTaskModule(Task approvedTask){
         switch (approvedTask.getModule()){
             case MODULE_PROVINCE:
-                addProvinceByTaskAdaptor.execute(JSON.parseObject(approvedTask.getTaskAfter(), AddProvinceByTaskRequest.class));
+                this.doSubmitProvinceAdaptor(approvedTask);
+                break;
+            case MODULE_CITY:
+                //submit module city
                 break;
             default:
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Constants.ERR_MSG_TASK_MODULE_INVALID);
+        }
+    }
+
+    private void doSubmitProvinceAdaptor(Task approvedTask){
+        if(approvedTask.getAction().equals(TaskAction.INSERT.getValue())){
+            addProvinceByTaskAdaptor.execute(JSON.parseObject(approvedTask.getTaskAfter(), AddProvinceByTaskRequest.class));
+        }else if(approvedTask.getAction().equals(TaskAction.UPDATE.getValue())){
+            updateProvinceByTaskAdaptor.execute(JSON.parseObject(approvedTask.getTaskAfter(), UpdateProvinceByTaskRequest.class));
+        }else if(approvedTask.getAction().equals(TaskAction.DELETE.getValue())){
+            //delete
         }
     }
 

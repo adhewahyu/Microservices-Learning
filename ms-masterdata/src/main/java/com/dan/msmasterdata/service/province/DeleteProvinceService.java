@@ -34,7 +34,7 @@ public class DeleteProvinceService implements BaseService<DeleteProvinceRequest,
         log.info("SoftDeleteProvinceService - Called");
         validateProvinceService.execute(Constants.VALIDATION_TYPE_DELETE,
                 input.getId(), null, null,
-                null, null, input.getUpdatedBy(), input.getUpdatedDate());
+                null, true, input.getUpdatedBy(), input.getUpdatedDate());
         provinceRepository.findById(input.getId()).ifPresentOrElse(data ->{
             AddTaskRequest addTaskRequest = AddTaskRequest.builder()
                     .action(TaskAction.DELETE.getValue())

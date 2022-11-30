@@ -22,5 +22,6 @@ public class Constants {
     public static final String FLD_STATUS = "status";
 
     public static final String MODULE_PROVINCE = "PROVINCE";
+    public static final String MODULE_CITY = "CITY";
 
 }

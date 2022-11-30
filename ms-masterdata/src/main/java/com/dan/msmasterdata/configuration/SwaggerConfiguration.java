@@ -57,10 +57,12 @@ public class SwaggerConfiguration {
                     .or(PathSelectors.regex("/province/v1/delete"))
                     .or(PathSelectors.regex("/province/v1/search"))
                     .or(PathSelectors.regex("/province/v1/add-province-by-task"))
+                    .or(PathSelectors.regex("/province/v1/update-province-by-task"))
 
                     .or(PathSelectors.regex("/city/v1/add"))
                     .or(PathSelectors.regex("/city/v1/update"))
                     .or(PathSelectors.regex("/city/v1/delete"))
+
             )
             .build()
             .tags(API_PROVINCE, API_CITY);

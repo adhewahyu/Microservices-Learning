@@ -1,5 +1,6 @@
 package com.dan.msmasterdata.service.province;
 
+import com.dan.msmasterdata.repository.ProvinceRepository;
 import com.dan.msmasterdata.utility.CommonUtility;
 import com.dan.msmasterdata.utility.Constants;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import static com.dan.msmasterdata.utility.Constants.*;
 public class ValidateProvinceService {
 
     private final CommonUtility commonUtility;
+    private final ProvinceRepository provinceRepository;
 
     public void execute(String type, String id, String provinceCode, String provinceName, Boolean isActive, Boolean isDeleted, String submitBy, Long submitDate){
         switch (type){
@@ -38,13 +40,13 @@ public class ValidateProvinceService {
     private void doValidateUpdateProvince(String id, String provinceCode, String provinceName, Boolean isActive, Boolean isDeleted, String submitBy, Long submitDate){
         commonUtility.doValidateId(id);
         doValidateBaseProvince(provinceCode, provinceName);
+        if(provinceRepository.countProvinceByProvinceCode(provinceCode) > 0 || provinceRepository.countProvinceByProvinceName(provinceName) > 0){
+            log.error("Duplicate province code / name");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Province code or name already exists");
+        }
         if(ObjectUtils.isEmpty(isActive)){
             log.error("Flag isActive is required");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Flag isActive is required");
-        }
-        if(ObjectUtils.isEmpty(isDeleted)){
-            log.error("Flag isDeleted is required");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Flag isDeleted is required");
         }
         if(StringUtils.isEmpty(submitBy)){
             log.error("Updated By is required");

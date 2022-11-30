@@ -24,7 +24,7 @@ public class UpdateProvinceService implements BaseService<UpdateProvinceRequest,
     public ValidationResponse execute(UpdateProvinceRequest input) {
         validateProvinceService.execute(Constants.VALIDATION_TYPE_UPDATE,
                 input.getId(), input.getProvinceCode(), input.getProvinceName(),
-                input.getIsActive(), input.getIsDeleted(), input.getUpdatedBy(), input.getUpdatedDate());
+                input.getIsActive(), null, input.getUpdatedBy(), input.getUpdatedDate());
         AddTaskRequest addTaskRequest = AddTaskRequest.builder()
                 .action(TaskAction.UPDATE.getValue())
                 .createdBy(input.getUpdatedBy())

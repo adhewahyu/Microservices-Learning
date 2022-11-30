@@ -1,10 +1,7 @@
 package com.dan.msmasterdata.controller;
 
 import com.dan.msmasterdata.model.entity.Province;
-import com.dan.msmasterdata.model.request.province.AddProvinceByTaskRequest;
-import com.dan.msmasterdata.model.request.province.AddProvinceRequest;
-import com.dan.msmasterdata.model.request.province.DeleteProvinceRequest;
-import com.dan.msmasterdata.model.request.province.UpdateProvinceRequest;
+import com.dan.msmasterdata.model.request.province.*;
 import com.dan.msmasterdata.service.province.*;
 import com.dan.msmasterdata.utility.Constants;
 import com.dan.shared.controller.BaseController;
@@ -35,6 +32,7 @@ public class ProvinceController extends BaseController {
     private final AddProvinceService addProvinceService;
     private final AddProvinceByTaskService addProvinceByTaskService;
     private final UpdateProvinceService updateProvinceService;
+    private final UpdateProvinceByTaskService updateProvinceByTaskService;
     private final DeleteProvinceService deleteProvinceService;
     private final SearchProvinceService searchProvinceService;
 
@@ -59,6 +57,14 @@ public class ProvinceController extends BaseController {
             @RequestHeader(CommonConstants.REQ_HEADER_APIKEY) String apiKey,
             @RequestBody UpdateProvinceRequest updateProvinceRequest){
         ValidationResponse validationResponse = updateProvinceService.execute(updateProvinceRequest);
+        return Mono.just(new ResponseEntity<>( new RestResponse(null, CommonConstants.SUCCESS_MSG_DATA_SUBMITTED, MessageCode.OK.getValue(), validationResponse.getResult()), HttpStatus.OK));
+    }
+
+    @PostMapping("/v1/update-province-by-task")
+    public Mono<ResponseEntity<RestResponse>> addProvince(
+            @RequestHeader(CommonConstants.REQ_HEADER_APIKEY) String apiKey,
+            @RequestBody UpdateProvinceByTaskRequest updateProvinceByTaskRequest){
+        ValidationResponse validationResponse = updateProvinceByTaskService.execute(updateProvinceByTaskRequest);
         return Mono.just(new ResponseEntity<>( new RestResponse(null, CommonConstants.SUCCESS_MSG_DATA_SUBMITTED, MessageCode.OK.getValue(), validationResponse.getResult()), HttpStatus.OK));
     }
 

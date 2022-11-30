@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateProvinceRequest extends BaseProvinceRequest{
+public class UpdateProvinceByTaskRequest extends BaseProvinceRequest{
 
-    @ApiModelProperty(example ="1", value="ID Reference to Find")
+    @ApiModelProperty(example ="1234-1234", value="ID Reference to Find")
     private String id;
 
     @ApiModelProperty(name = "Is Active", value = "true / false")
