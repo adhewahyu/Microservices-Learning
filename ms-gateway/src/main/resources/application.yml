@@ -48,6 +48,10 @@ gateway:
       path: "/api/masterdata-service/**"
       url: "http://localhost:83/api/masterdata-service"
       apiKey: f789957c-a78a-421d-bb0e-c6b2b72ecd2b
+    - id: ms-notification
+      path: "/api/notification-service/**"
+      url: "http://localhost:84/api/notification-service"
+      apiKey: 7a97e2be-253f-47f0-a512-4a07a0d1d9b0
 client:
   endpoints:
     - http://localhost:4200
