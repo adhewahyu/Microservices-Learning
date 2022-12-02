@@ -4,7 +4,11 @@ import com.dan.shared.enums.RegexType;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Safelist;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Date;
 import java.util.Objects;
@@ -57,6 +61,13 @@ public class SharedUtility {
 
     public Long getDateOrReturnNull(Date inputDate){
         return ObjectUtils.isEmpty(inputDate) ? null : inputDate.getTime();
+    }
+
+    public void doCheckInputContainsHTML(String input){
+        if(StringUtils.isNotEmpty(input) && !Jsoup.isValid(input, Safelist.none())){
+            log.error("HTML format input detected");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid request is sent");
+        }
     }
 
 }

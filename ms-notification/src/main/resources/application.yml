@@ -1,0 +1,110 @@
+redis:
+  host: localhost
+  password:
+  port: 6379
+  dbIndex: 0
+  maxIdle: 50
+  minIdle: 50
+  maxTotal: 50
+  timeout: 5
+  maxWait: 10
+  shutdown: 100
+server:
+  port: 84
+  error:
+    include-message: always
+spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: ms-masterdata-group
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  application:
+    name: ms-notification service
+  datasource:
+    name: datasource
+    url: jdbc:postgresql://localhost:5432/msnotification
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    platform: postgres
+    filters: stat
+    maxActive: 80
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 80
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      max-lifetime: 1800000
+      maximum-pool-size : 80
+      minimum-idle: 10
+      pool-name : MsNotificationConnPool
+  jpa:
+    hibernate:
+      ddl-auto: update
+      connection:
+        provider_class : "com.zaxxer.hikari.hibernate.HikariConnectionProvider"
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        hbm2ddl.auto: update
+        jdbc.lob.non_contextual_creation: true
+        order_updates: true
+        batch_versioned_data: true
+  webflux:
+    base-path: "/api/notification-service"
+logging:
+  level:
+    io:
+      swagger:
+        models:
+          parameters:
+            AbstractSerializableParameter: error
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 160000000
+        readTimeout: 160000000
+rest:
+  client:
+    sslbypass: true
+    readTimeout: 20000
+    connectTimeout: 20000
+    maxConnectionTotal: 2000
+    defaultMaxRoute: 2000
+config:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: basicmailsender
+    password: P@ssword1!
+    protocol: smtp
+    debug: true
+    sender: basicmailsender@gmail.com
+    auth: true
+    starttls-enable: true
+    connect-timeout: 50000
+    timeout: 50000
+    write-timeout: 50000
+  internal:
+    api:
+      micro:
+        path: '/api/notification-service'
+      key: 7a97e2be-253f-47f0-a512-4a07a0d1d9b0
+swagger:
+  #host: "localhost:${server.port}" #test from local
+  host: "localhost:80" #test using gateway
+
+
