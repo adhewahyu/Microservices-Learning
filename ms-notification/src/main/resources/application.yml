@@ -89,7 +89,7 @@ config:
     host: smtp.gmail.com
     port: 587
     username: basicmailsender
-    password: P@ssword1!
+    password: vgixyehtsqwybwky
     protocol: smtp
     debug: true
     sender: basicmailsender@gmail.com
