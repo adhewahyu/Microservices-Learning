@@ -1,9 +1,10 @@
-package com.dan.msmasterdata.service.province;
+package com.dan.msmasterdata.service.city;
 
 import com.alibaba.fastjson2.JSON;
-import com.dan.msmasterdata.model.response.province.ProvinceListResponse;
+import com.dan.msmasterdata.model.response.city.CityResponse;
 import com.dan.msmasterdata.model.response.province.ProvinceResponse;
-import com.dan.msmasterdata.model.transformer.ProvinceResponseTransformer;
+import com.dan.msmasterdata.model.transformer.CityResponseTransformer;
+import com.dan.msmasterdata.repository.CityRepository;
 import com.dan.msmasterdata.repository.ProvinceRepository;
 import com.dan.msmasterdata.utility.Constants;
 import com.dan.shared.model.request.BaseRequest;
@@ -20,20 +21,20 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class RefreshProvinceService implements BaseService<BaseRequest, ValidationResponse> {
+public class RefreshCityService implements BaseService<BaseRequest, ValidationResponse> {
 
-    private final ProvinceRepository provinceRepository;
+    private final CityRepository cityRepository;
     private final CacheUtility cacheUtility;
-    private final ProvinceResponseTransformer provinceResponseTransformer;
+    private final CityResponseTransformer cityResponseTransformer;
 
     @Override
     public ValidationResponse execute(BaseRequest input) {
-        log.info("RefreshProvinceService - Called");
-        List<ProvinceResponse> provinceResponseList = provinceRepository.findAllActiveProvince()
+        log.info("RefreshCityService - Called");
+        List<CityResponse> cityResponseList = cityRepository.findAllActiveCity()
                 .stream()
-                .map(provinceResponseTransformer::transform)
+                .map(cityResponseTransformer::transform)
                 .collect(Collectors.toList());
-        cacheUtility.set(Constants.RDS_MASTERDATA, Constants.RDS_MASTER_DATA_PROVINSI, JSON.toJSONString(provinceResponseList), null);
+        cacheUtility.set(Constants.RDS_MASTERDATA, Constants.RDS_MASTER_DATA_CITY, JSON.toJSONString(cityResponseList), null);
         return ValidationResponse.builder().result(true).build();
     }
 }

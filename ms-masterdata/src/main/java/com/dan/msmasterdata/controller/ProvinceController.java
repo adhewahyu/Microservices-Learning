@@ -53,7 +53,7 @@ public class ProvinceController extends BaseController {
         return Mono.just(new ResponseEntity<>( new RestResponse(null, CommonConstants.SUCCESS_MSG_DATA_SUBMITTED, MessageCode.OK.getValue(), validationResponse.getResult()), HttpStatus.OK));
     }
 
-    @PostMapping("/v1/update")
+    @PutMapping("/v1/update")
     public Mono<ResponseEntity<RestResponse>> updateProvince(
             @RequestHeader(CommonConstants.REQ_HEADER_APIKEY) String apiKey,
             @RequestBody UpdateProvinceRequest updateProvinceRequest){
@@ -69,7 +69,7 @@ public class ProvinceController extends BaseController {
         return Mono.just(new ResponseEntity<>( new RestResponse(null, CommonConstants.SUCCESS_MSG_DATA_SUBMITTED, MessageCode.OK.getValue(), validationResponse.getResult()), HttpStatus.OK));
     }
 
-    @PostMapping("/v1/delete")
+    @DeleteMapping("/v1/delete")
     public Mono<ResponseEntity<RestResponse>> deleteProvince(
             @RequestHeader(CommonConstants.REQ_HEADER_APIKEY) String apiKey,
             @RequestBody DeleteProvinceRequest deleteProvinceRequest){
@@ -86,7 +86,7 @@ public class ProvinceController extends BaseController {
     }
 
     @GetMapping("/v1/search")
-    public ResponseEntity<RestResponse> getTasks(
+    public ResponseEntity<RestResponse> searchProvince(
             @RequestHeader(value = CommonConstants.REQ_HEADER_APIKEY) String apiKey,
             SearchRequest searchRequest) {
         Specification<Province> specs = Specification.where((root, query, criteriaBuilder) -> {

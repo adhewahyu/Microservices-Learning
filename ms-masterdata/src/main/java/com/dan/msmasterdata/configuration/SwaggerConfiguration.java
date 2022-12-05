@@ -63,6 +63,9 @@ public class SwaggerConfiguration {
                     .or(PathSelectors.regex("/city/v1/add"))
                     .or(PathSelectors.regex("/city/v1/update"))
                     .or(PathSelectors.regex("/city/v1/delete"))
+                    .or(PathSelectors.regex("/city/v1/add-city-by-task"))
+                    .or(PathSelectors.regex("/city/v1/update-city-by-task"))
+                    .or(PathSelectors.regex("/city/v1/delete-city-by-task"))
 
             )
             .build()

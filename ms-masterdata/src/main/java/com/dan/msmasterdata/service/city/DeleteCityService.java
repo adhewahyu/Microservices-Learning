@@ -1,9 +1,11 @@
-package com.dan.msmasterdata.service.province;
+package com.dan.msmasterdata.service.city;
 
 import com.alibaba.fastjson2.JSON;
 import com.dan.msmasterdata.adaptor.rest.AddTaskAdaptor;
+import com.dan.msmasterdata.model.request.city.DeleteCityRequest;
 import com.dan.msmasterdata.model.request.province.DeleteProvinceRequest;
 import com.dan.msmasterdata.model.request.task.AddTaskRequest;
+import com.dan.msmasterdata.repository.CityRepository;
 import com.dan.msmasterdata.repository.ProvinceRepository;
 import com.dan.msmasterdata.utility.CommonUtility;
 import com.dan.msmasterdata.utility.Constants;
@@ -13,8 +15,6 @@ import com.dan.shared.service.BaseService;
 import com.dan.shared.utility.CommonConstants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -23,25 +23,22 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class DeleteProvinceService implements BaseService<DeleteProvinceRequest, ValidationResponse> {
+public class DeleteCityService implements BaseService<DeleteCityRequest, ValidationResponse> {
 
-    private final ProvinceRepository provinceRepository;
+    private final CityRepository cityRepository;
     private final AddTaskAdaptor addTaskAdaptor;
-    private final ValidateProvinceService validateProvinceService;
+    private final ValidateCityService validateCityService;
+    private final CommonUtility commonUtility;
 
     @Override
-    public ValidationResponse execute(DeleteProvinceRequest input) {
+    public ValidationResponse execute(DeleteCityRequest input) {
         log.info("SoftDeleteProvinceService - Called");
-        validateProvinceService.execute(Constants.VALIDATION_TYPE_DELETE,
+        validateCityService.execute(Constants.VALIDATION_TYPE_DELETE,
                 input.getId(), null, null,
-                null,  input.getUpdatedBy(), input.getUpdatedDate());
-        provinceRepository.findById(input.getId()).ifPresentOrElse(data ->{
-            AddTaskRequest addTaskRequest = AddTaskRequest.builder()
-                    .action(TaskAction.DELETE.getValue())
-                    .createdBy(input.getUpdatedBy())
-                    .createdDate(input.getUpdatedDate())
-                    .build();
-            addTaskRequest.setModule(Constants.MODULE_PROVINCE);
+                null, null, input.getUpdatedBy(), input.getUpdatedDate());
+        cityRepository.findById(input.getId()).ifPresentOrElse(data ->{
+            AddTaskRequest addTaskRequest = commonUtility.generateDefaultAddTaskRequest(TaskAction.DELETE.getValue(), input.getUpdatedBy(), input.getUpdatedDate());
+            addTaskRequest.setModule(Constants.MODULE_CITY);
             addTaskRequest.setTaskAfter(JSON.toJSONString(input));
             addTaskAdaptor.execute(addTaskRequest);
         },()->{

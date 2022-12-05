@@ -20,7 +20,7 @@ public class PublishProvinceService {
 
     @Async
     public void execute(BaseRequest baseRequest){
-        log.info("PublishMahasiswaService - convert and send");
+        log.info("PublishProvinceService - convert and send");
         kafkaTemplate.send(Constants.KAFKA_TOPIC_MASTERDATA_PROVINSI, UUID.randomUUID().toString() , JSON.toJSONString(baseRequest));
     }
 }

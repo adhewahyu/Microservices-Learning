@@ -5,6 +5,7 @@ public class Constants {
     public static final String ERR_MSG_ID_REQUIRED = "Id is required";
 
     public static final String MODULE_PROVINCE = "PROVINCE";
+    public static final String MODULE_CITY = "CITY";
 
     public static final String VALIDATION_TYPE_ADD = "ADD";
     public static final String VALIDATION_TYPE_UPDATE = "UPDATE";
@@ -16,8 +17,10 @@ public class Constants {
     public static final String FLD_ACTIVE = "isActive";
 
     public static final String KAFKA_TOPIC_MASTERDATA_PROVINSI = "topic-masterdata-provinsi";
+    public static final String KAFKA_TOPIC_MASTERDATA_CITY = "topic-masterdata-city";
 
     public static final String RDS_MASTERDATA = "RDS_MASTERDATA";
     public static final String RDS_MASTER_DATA_PROVINSI = "RDS_MASTERDATA_PROVINSI";
+    public static final String RDS_MASTER_DATA_CITY = "RDS_MASTERDATA_CITY";
 
 }
