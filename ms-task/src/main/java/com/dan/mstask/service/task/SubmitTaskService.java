@@ -1,11 +1,17 @@
 package com.dan.mstask.service.task;
 
 import com.alibaba.fastjson2.JSON;
+import com.dan.mstask.adaptor.rest.city.AddCityByTaskAdaptor;
+import com.dan.mstask.adaptor.rest.city.DeleteCityByTaskAdaptor;
+import com.dan.mstask.adaptor.rest.city.UpdateCityByTaskAdaptor;
 import com.dan.mstask.adaptor.rest.province.AddProvinceByTaskAdaptor;
 import com.dan.mstask.adaptor.rest.province.DeleteProvinceByTaskAdaptor;
 import com.dan.mstask.adaptor.rest.province.UpdateProvinceByTaskAdaptor;
 import com.dan.mstask.model.entity.Task;
 import com.dan.mstask.model.request.audit.AddAuditRequest;
+import com.dan.mstask.model.request.city.AddCityByTaskRequest;
+import com.dan.mstask.model.request.city.DeleteCityByTaskRequest;
+import com.dan.mstask.model.request.city.UpdateCityByTaskRequest;
 import com.dan.mstask.model.request.province.AddProvinceByTaskRequest;
 import com.dan.mstask.model.request.province.DeleteProvinceByTaskRequest;
 import com.dan.mstask.model.request.province.UpdateProvinceByTaskRequest;
@@ -43,6 +49,9 @@ public class SubmitTaskService implements BaseService<SubmitTaskRequest, Validat
     private final UpdateProvinceByTaskAdaptor updateProvinceByTaskAdaptor;
     private final DeleteProvinceByTaskAdaptor deleteProvinceByTaskAdaptor;
     private final AddAuditAsyncService addAuditAsyncService;
+    private final AddCityByTaskAdaptor addCityByTaskAdaptor;
+    private final UpdateCityByTaskAdaptor updateCityByTaskAdaptor;
+    private final DeleteCityByTaskAdaptor deleteCityByTaskAdaptor;
 
     @Override
     public ValidationResponse execute(SubmitTaskRequest input) {
@@ -86,7 +95,7 @@ public class SubmitTaskService implements BaseService<SubmitTaskRequest, Validat
                 this.doSubmitProvinceAdaptor(approvedTask);
                 break;
             case MODULE_CITY:
-                //submit module city
+                this.doSubmitCityAdaptor(approvedTask);
                 break;
             default:
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Constants.ERR_MSG_TASK_MODULE_INVALID);
@@ -100,6 +109,16 @@ public class SubmitTaskService implements BaseService<SubmitTaskRequest, Validat
             updateProvinceByTaskAdaptor.execute(JSON.parseObject(approvedTask.getTaskAfter(), UpdateProvinceByTaskRequest.class));
         }else if(approvedTask.getAction().equals(TaskAction.DELETE.getValue())){
             deleteProvinceByTaskAdaptor.execute(JSON.parseObject(approvedTask.getTaskAfter(), DeleteProvinceByTaskRequest.class));
+        }
+    }
+
+    private void doSubmitCityAdaptor(Task approvedTask){
+        if(approvedTask.getAction().equals(TaskAction.INSERT.getValue())){
+            addCityByTaskAdaptor.execute(JSON.parseObject(approvedTask.getTaskAfter(), AddCityByTaskRequest.class));
+        }else if(approvedTask.getAction().equals(TaskAction.UPDATE.getValue())){
+            updateCityByTaskAdaptor.execute(JSON.parseObject(approvedTask.getTaskAfter(), UpdateCityByTaskRequest.class));
+        }else if(approvedTask.getAction().equals(TaskAction.DELETE.getValue())){
+            deleteCityByTaskAdaptor.execute(JSON.parseObject(approvedTask.getTaskAfter(), DeleteCityByTaskRequest.class));
         }
     }
 

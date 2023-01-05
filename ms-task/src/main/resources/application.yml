@@ -94,12 +94,17 @@ config:
       key: 45e21844-2546-45bd-b4dc-52765949ffd9
   integration:
     ms-audit:
-      add-audit: http://localhost:81/api/audit-service/audit/v1/add
+      baseUrl: http://localhost:81
+      add-audit: ${config.integration.ms-audit.baseUrl}/api/audit-service/audit/v1/add
       key: 4da85148-6e25-4a2e-9744-382adf1c3e9c
     ms-masterdata:
-      add-province-by-task: http://localhost:83/api/masterdata-service/province/v1/add-by-task
-      update-province-by-task: http://localhost:83/api/masterdata-service/province/v1/update-by-task
-      delete-province-by-task: http://localhost:83/api/masterdata-service/province/v1/delete-by-task
+      baseUrl: http://localhost:83
+      add-province-by-task: ${config.integration.ms-masterdata.baseUrl}/api/masterdata-service/province/v1/add-by-task
+      update-province-by-task: ${config.integration.ms-masterdata.baseUrl}/api/masterdata-service/province/v1/update-by-task
+      delete-province-by-task: ${config.integration.ms-masterdata.baseUrl}/api/masterdata-service/province/v1/delete-by-task
+      add-city-by-task: ${config.integration.ms-masterdata.baseUrl}/api/masterdata-service/city/v1/add-by-task
+      update-city-by-task: ${config.integration.ms-masterdata.baseUrl}/api/masterdata-service/city/v1/update-by-task
+      delete-city-by-task: ${config.integration.ms-masterdata.baseUrl}/api/masterdata-service/city/v1/delete-by-task
       key: f789957c-a78a-421d-bb0e-c6b2b72ecd2b
 swagger:
   #host: "localhost:${server.port}" #test from local
