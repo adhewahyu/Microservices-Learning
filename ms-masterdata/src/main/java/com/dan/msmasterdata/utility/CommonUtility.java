@@ -1,5 +1,7 @@
 package com.dan.msmasterdata.utility;
 
+import com.dan.msmasterdata.model.entity.City;
+import com.dan.msmasterdata.model.entity.Province;
 import com.dan.msmasterdata.model.request.task.AddTaskRequest;
 import com.dan.shared.enums.TaskAction;
 import lombok.extern.slf4j.Slf4j;
@@ -53,6 +55,17 @@ public class CommonUtility {
                 .createdBy(createdBy)
                 .createdDate(createdDate)
                 .build();
+    }
+
+    public void doResolveCommonCreateData(Object object){
+        if(object instanceof Province){
+            ((Province) object).setIsDeleted(false);
+            ((Province) object).setIsActive(true);
+        }
+        if(object instanceof City){
+            ((City) object).setIsDeleted(false);
+            ((City) object).setIsActive(true);
+        }
     }
 
 }

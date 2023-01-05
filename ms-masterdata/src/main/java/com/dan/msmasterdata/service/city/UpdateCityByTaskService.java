@@ -1,8 +1,8 @@
-package com.dan.msmasterdata.service.province;
+package com.dan.msmasterdata.service.city;
 
-import com.dan.msmasterdata.model.request.province.UpdateProvinceByTaskRequest;
-import com.dan.msmasterdata.queue.publisher.province.PublishRefreshProvinceService;
-import com.dan.msmasterdata.repository.ProvinceRepository;
+import com.dan.msmasterdata.model.request.city.UpdateCityByTaskRequest;
+import com.dan.msmasterdata.queue.publisher.city.PublishRefreshCityService;
+import com.dan.msmasterdata.repository.CityRepository;
 import com.dan.shared.model.request.BaseRequest;
 import com.dan.shared.model.response.ValidationResponse;
 import com.dan.shared.service.BaseService;
@@ -21,24 +21,25 @@ import java.util.Date;
 @Slf4j
 @RequiredArgsConstructor
 @Transactional(propagation = Propagation.REQUIRES_NEW)
-public class UpdateProvinceByTaskService implements BaseService<UpdateProvinceByTaskRequest, ValidationResponse> {
+public class UpdateCityByTaskService implements BaseService<UpdateCityByTaskRequest, ValidationResponse> {
 
-    private final ProvinceRepository provinceRepository;
-    private final PublishRefreshProvinceService publishRefreshProvinceService;
+    private final CityRepository cityRepository;
+    private final PublishRefreshCityService publishRefreshCityService;
 
     @Override
-    public ValidationResponse execute(UpdateProvinceByTaskRequest input) {
-        log.info("UpdateProvinceByTaskService - Called");
-        provinceRepository.findById(input.getId()).ifPresentOrElse(data ->{
+    public ValidationResponse execute(UpdateCityByTaskRequest input) {
+        log.info("UpdateCityByTaskService - Called");
+        cityRepository.findById(input.getId()).ifPresentOrElse(data ->{
             data.setProvinceCode(input.getProvinceCode());
-            data.setProvinceName(input.getProvinceName());
+            data.setCityCode(input.getCityCode());
+            data.setCityName(input.getCityName());
             data.setIsActive(input.getIsActive());
             data.setUpdatedBy(input.getUpdatedBy());
             data.setUpdatedDate(new Date(input.getUpdatedDate()));
-            provinceRepository.save(data);
-            publishRefreshProvinceService.execute(new BaseRequest());
+            cityRepository.save(data);
+            publishRefreshCityService.execute(new BaseRequest());
         },()->{
-            log.error("Province with id = {} not found",input.getId());
+            log.error("City with id = {} not found",input.getId());
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, CommonConstants.ERR_MSG_DATA_NOT_FOUND);
         });
         return ValidationResponse.builder().result(true).build();

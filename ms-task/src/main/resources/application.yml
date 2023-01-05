@@ -97,9 +97,9 @@ config:
       add-audit: http://localhost:81/api/audit-service/audit/v1/add
       key: 4da85148-6e25-4a2e-9744-382adf1c3e9c
     ms-masterdata:
-      add-province-by-task: http://localhost:83/api/masterdata-service/province/v1/add-province-by-task
-      update-province-by-task: http://localhost:83/api/masterdata-service/province/v1/update-province-by-task
-      delete-province-by-task: http://localhost:83/api/masterdata-service/province/v1/delete-province-by-task
+      add-province-by-task: http://localhost:83/api/masterdata-service/province/v1/add-by-task
+      update-province-by-task: http://localhost:83/api/masterdata-service/province/v1/update-by-task
+      delete-province-by-task: http://localhost:83/api/masterdata-service/province/v1/delete-by-task
       key: f789957c-a78a-421d-bb0e-c6b2b72ecd2b
 swagger:
   #host: "localhost:${server.port}" #test from local
