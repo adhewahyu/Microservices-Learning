@@ -22,7 +22,7 @@ import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Api(tags = "Microservice Audit APIs")
+@Api(tags = "Audit APIs")
 @RestController
 @RequestMapping("/audit")
 @RequiredArgsConstructor

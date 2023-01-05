@@ -18,7 +18,7 @@ import java.util.Collections;
 @EnableSwagger2
 public class SwaggerConfiguration {
 
-    private static final Tag API_AUDIT = new Tag("Microservice Audit APIs", "Provide APIs for Audit Operations.");
+    private static final Tag API_AUDIT = new Tag("Audit APIs", "Provide APIs for Audit Operations.");
 
     @Value("${swagger.host}")
     private String swaggerHost;

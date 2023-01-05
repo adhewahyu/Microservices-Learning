@@ -28,7 +28,7 @@ import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Api(tags = "Microservice Task APIs")
+@Api(tags = "Task APIs")
 @RestController
 @RequestMapping("/task")
 @RequiredArgsConstructor
