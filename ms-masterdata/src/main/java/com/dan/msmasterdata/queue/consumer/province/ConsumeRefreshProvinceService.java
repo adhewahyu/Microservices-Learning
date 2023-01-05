@@ -18,7 +18,7 @@ public class ConsumeRefreshProvinceService {
 
     @KafkaListener(topics = Constants.KAFKA_TOPIC_MASTERDATA_PROVINSI, groupId = "${spring.kafka.consumer.group-id}")
     public ValidationResponse execute(String kafkaMessage){
-        log.info("ConsumeProvinsiService - Called");
+        log.info("ConsumeRefreshProvinceService - Called");
         refreshProvinceService.execute(new BaseRequest());
         return ValidationResponse.builder().result(true).build();
     }
