@@ -55,7 +55,7 @@ public class SecurityConfiguration {
 
     private Boolean isValidApiKey(ServerHttpRequest request){
         String apiKey = request.getHeaders().getFirst(CommonConstants.REQ_HEADER_APIKEY);
-        if(apiKey.equals(internalApiKey)){
+        if(StringUtils.isNotEmpty(apiKey) && apiKey.equals(internalApiKey)){
             log.info("request came from another micro service");
             return true;
         }
