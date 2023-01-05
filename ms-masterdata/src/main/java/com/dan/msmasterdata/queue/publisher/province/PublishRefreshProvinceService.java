@@ -14,7 +14,7 @@ import java.util.UUID;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class PublishProvinceService {
+public class PublishRefreshProvinceService {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
 

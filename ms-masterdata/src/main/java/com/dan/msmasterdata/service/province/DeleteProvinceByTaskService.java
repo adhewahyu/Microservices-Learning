@@ -1,7 +1,7 @@
 package com.dan.msmasterdata.service.province;
 
 import com.dan.msmasterdata.model.request.province.DeleteProvinceByTaskRequest;
-import com.dan.msmasterdata.queue.publisher.province.PublishProvinceService;
+import com.dan.msmasterdata.queue.publisher.province.PublishRefreshProvinceService;
 import com.dan.msmasterdata.repository.ProvinceRepository;
 import com.dan.shared.model.request.BaseRequest;
 import com.dan.shared.model.response.ValidationResponse;
@@ -24,7 +24,7 @@ import java.util.Date;
 public class DeleteProvinceByTaskService implements BaseService<DeleteProvinceByTaskRequest, ValidationResponse> {
 
     private final ProvinceRepository provinceRepository;
-    private final PublishProvinceService publishProvinceService;
+    private final PublishRefreshProvinceService publishRefreshProvinceService;
 
     @Override
     public ValidationResponse execute(DeleteProvinceByTaskRequest input) {
@@ -34,7 +34,7 @@ public class DeleteProvinceByTaskService implements BaseService<DeleteProvinceBy
             data.setUpdatedBy(input.getUpdatedBy());
             data.setUpdatedDate(new Date(input.getUpdatedDate()));
             provinceRepository.save(data);
-            publishProvinceService.execute(new BaseRequest());
+            publishRefreshProvinceService.execute(new BaseRequest());
         },()->{
             log.error("Province with id = {} not found", input.getId());
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, CommonConstants.ERR_MSG_DATA_NOT_FOUND);

@@ -45,7 +45,7 @@ public class ProvinceController extends BaseController {
         return Mono.just(new ResponseEntity<>( new RestResponse(null, CommonConstants.SUCCESS_MSG_DATA_SUBMITTED, MessageCode.OK.getValue(), validationResponse.getResult()), HttpStatus.OK));
     }
 
-    @PostMapping("/v1/add-province-by-task")
+    @PostMapping("/v1/add-by-task")
     public Mono<ResponseEntity<RestResponse>> addProvince(
             @RequestHeader(CommonConstants.REQ_HEADER_APIKEY) String apiKey,
             @RequestBody AddProvinceByTaskRequest addProvinceByTaskRequest){
@@ -61,7 +61,7 @@ public class ProvinceController extends BaseController {
         return Mono.just(new ResponseEntity<>( new RestResponse(null, CommonConstants.SUCCESS_MSG_DATA_SUBMITTED, MessageCode.OK.getValue(), validationResponse.getResult()), HttpStatus.OK));
     }
 
-    @PostMapping("/v1/update-province-by-task")
+    @PostMapping("/v1/update-by-task")
     public Mono<ResponseEntity<RestResponse>> addProvince(
             @RequestHeader(CommonConstants.REQ_HEADER_APIKEY) String apiKey,
             @RequestBody UpdateProvinceByTaskRequest updateProvinceByTaskRequest){
@@ -77,7 +77,7 @@ public class ProvinceController extends BaseController {
         return Mono.just(new ResponseEntity<>( new RestResponse(null, CommonConstants.SUCCESS_MSG_DATA_SUBMITTED, MessageCode.OK.getValue(), validationResponse.getResult()), HttpStatus.OK));
     }
 
-    @PostMapping("/v1/delete-province-by-task")
+    @PostMapping("/v1/delete-by-task")
     public Mono<ResponseEntity<RestResponse>> addProvince(
             @RequestHeader(CommonConstants.REQ_HEADER_APIKEY) String apiKey,
             @RequestBody DeleteProvinceByTaskRequest deleteProvinceByTaskRequest){
