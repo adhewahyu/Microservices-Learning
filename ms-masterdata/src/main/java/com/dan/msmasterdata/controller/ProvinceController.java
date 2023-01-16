@@ -46,7 +46,7 @@ public class ProvinceController extends BaseController {
     }
 
     @PostMapping("/v1/add-by-task")
-    public Mono<ResponseEntity<RestResponse>> addProvince(
+    public Mono<ResponseEntity<RestResponse>> addProvinceByTask(
             @RequestHeader(CommonConstants.REQ_HEADER_APIKEY) String apiKey,
             @RequestBody AddProvinceByTaskRequest addProvinceByTaskRequest){
         ValidationResponse validationResponse = addProvinceByTaskService.execute(addProvinceByTaskRequest);
@@ -62,7 +62,7 @@ public class ProvinceController extends BaseController {
     }
 
     @PostMapping("/v1/update-by-task")
-    public Mono<ResponseEntity<RestResponse>> addProvince(
+    public Mono<ResponseEntity<RestResponse>> updateProvinceByTask(
             @RequestHeader(CommonConstants.REQ_HEADER_APIKEY) String apiKey,
             @RequestBody UpdateProvinceByTaskRequest updateProvinceByTaskRequest){
         ValidationResponse validationResponse = updateProvinceByTaskService.execute(updateProvinceByTaskRequest);
@@ -78,7 +78,7 @@ public class ProvinceController extends BaseController {
     }
 
     @PostMapping("/v1/delete-by-task")
-    public Mono<ResponseEntity<RestResponse>> addProvince(
+    public Mono<ResponseEntity<RestResponse>> deleteProvinceByTask(
             @RequestHeader(CommonConstants.REQ_HEADER_APIKEY) String apiKey,
             @RequestBody DeleteProvinceByTaskRequest deleteProvinceByTaskRequest){
         ValidationResponse validationResponse = deleteProvinceByTaskService.execute(deleteProvinceByTaskRequest);
@@ -96,7 +96,9 @@ public class ProvinceController extends BaseController {
         });
         return this.getPageResponse(searchProvinceService.execute(SpecificationRequest.builder()
                 .pageable(getCommonPageable(searchRequest))
-                .specification(specs).build()).getPage());
+                .specification(specs)
+                .build())
+                .getPage());
     }
 
 }

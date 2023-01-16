@@ -22,9 +22,9 @@ public class SearchProvinceService implements BaseService<SpecificationRequest, 
     @Override
     public PageResponse execute(SpecificationRequest input) {
         log.info("SearchTaskService - Called");
-        Page<Province> pageTask = this.provinceRepository.findAll(input.getSpecification(), input.getPageable());
+        Page<Province> pageProvince = this.provinceRepository.findAll(input.getSpecification(), input.getPageable());
         return PageResponse.builder()
-                .page(pageTask.isEmpty() ? null : pageTask.map(provinceResponseTransformer::transform))
+                .page(pageProvince.isEmpty() ? null : pageProvince.map(provinceResponseTransformer::transform))
                 .build();
     }
 
